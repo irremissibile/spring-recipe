@@ -2,15 +2,18 @@ package co.winish.recipe.bootstrap;
 
 import co.winish.recipe.model.Category;
 import co.winish.recipe.repositories.CategoryRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Slf4j
 @Order(2)
 public class CategoryBootstrap implements ApplicationRunner {
 
@@ -22,7 +25,9 @@ public class CategoryBootstrap implements ApplicationRunner {
 
 
     @Override
+    @Transactional
     public void run(ApplicationArguments args) throws Exception {
+        log.debug("Bootstrapping categories data");
         categoryRepository.saveAll(getCategories());
     }
 

@@ -4,10 +4,12 @@ import co.winish.recipe.model.*;
 import co.winish.recipe.repositories.CategoryRepository;
 import co.winish.recipe.repositories.RecipeRepository;
 import co.winish.recipe.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Slf4j
 @Order(3)
 public class RecipeBootstrap implements ApplicationRunner {
 
@@ -30,7 +33,9 @@ public class RecipeBootstrap implements ApplicationRunner {
 
 
     @Override
+    @Transactional
     public void run(ApplicationArguments args) throws Exception {
+        log.debug("Bootstrapping recipes data");
         recipeRepository.saveAll(getRecipes());
     }
 
