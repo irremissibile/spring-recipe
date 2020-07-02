@@ -50,7 +50,9 @@ public class Recipe {
     }
 
     public void setNotes(Notes notes) {
-        notes.setRecipe(this);
-        this.notes = notes;
+        if (notes != null) {
+            notes.setRecipe(this);
+            this.notes = notes;
+        }
     }
 }
