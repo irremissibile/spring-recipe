@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 @Slf4j
-@Order(2)
+//@Component
+//@Order(2)
 public class CategoryBootstrap implements ApplicationRunner {
 
     private final CategoryRepository categoryRepository;
@@ -42,3 +42,4 @@ public class CategoryBootstrap implements ApplicationRunner {
         return categories;
     }
 }
+

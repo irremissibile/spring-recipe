@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 @Slf4j
-@Order(1)
+//@Component
+//@Order(1)
 public class UnitOfMeasureBootstrap implements ApplicationRunner {
 
     private final UnitOfMeasureRepository unitOfMeasureRepository;
