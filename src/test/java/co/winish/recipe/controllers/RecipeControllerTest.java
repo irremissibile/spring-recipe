@@ -50,18 +50,19 @@ class RecipeControllerTest {
 
         mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("recipe/show"));
+                .andExpect(view().name("recipe/show"))
+                .andExpect(model().attributeExists("recipe"));
     }
+
 
     @Test
     public void testGetNewRecipeForm() throws Exception {
-        RecipeCommand command = new RecipeCommand();
-
         mockMvc.perform(get("/recipe/new"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/recipeform"))
                 .andExpect(model().attributeExists("recipe"));
     }
+
 
     @Test
     public void testPostNewRecipeForm() throws Exception {
@@ -73,10 +74,12 @@ class RecipeControllerTest {
         mockMvc.perform(post("/recipe")
                             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                             .param("id", "")
-                            .param("description", "some string"))
+                            .param("description", "some string")
+                            .param("directions", "some shit here"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/2/show"));
     }
+
 
     @Test
     public void testGetUpdateView() throws Exception {
@@ -116,5 +119,16 @@ class RecipeControllerTest {
         mockMvc.perform(get("/recipe/string_instead_of_number/show"))
                 .andExpect(status().isBadRequest())
                 .andExpect(view().name("400error"));
+    }
+
+
+    @Test
+    public void testPostNewRecipeFormValidationFail() throws Exception {
+        mockMvc.perform(post("/recipe")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("id", ""))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/recipeform"))
+                .andExpect(model().attributeExists("recipe"));
     }
 }
