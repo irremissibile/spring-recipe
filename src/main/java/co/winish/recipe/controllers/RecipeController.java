@@ -58,28 +58,4 @@ public class RecipeController {
 
         return "redirect:/";
     }
-
-
-    @ExceptionHandler(NotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleNotFoundException(Model model, Exception exception) {
-        log.error("Handling NotFoundException");
-        log.error(exception.getMessage());
-
-        model.addAttribute("exception", exception);
-
-        return "404error";
-    }
-
-
-    @ExceptionHandler(NumberFormatException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleNumberFormatException(Model model, Exception exception) {
-        log.error("Handling NumberFormatException");
-        log.error(exception.getMessage());
-
-        model.addAttribute("exception", exception);
-
-        return "400error";
-    }
 }
