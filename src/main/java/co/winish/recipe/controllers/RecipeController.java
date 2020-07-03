@@ -1,8 +1,10 @@
 package co.winish.recipe.controllers;
 
 import co.winish.recipe.commands.RecipeCommand;
+import co.winish.recipe.exceptions.NotFoundException;
 import co.winish.recipe.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -55,5 +57,29 @@ public class RecipeController {
         recipeService.deleteById(Long.valueOf(id));
 
         return "redirect:/";
+    }
+
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleNotFoundException(Model model, Exception exception) {
+        log.error("Handling NotFoundException");
+        log.error(exception.getMessage());
+
+        model.addAttribute("exception", exception);
+
+        return "404error";
+    }
+
+
+    @ExceptionHandler(NumberFormatException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleNumberFormatException(Model model, Exception exception) {
+        log.error("Handling NumberFormatException");
+        log.error(exception.getMessage());
+
+        model.addAttribute("exception", exception);
+
+        return "400error";
     }
 }
