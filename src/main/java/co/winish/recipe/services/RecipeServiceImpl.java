@@ -3,6 +3,7 @@ package co.winish.recipe.services;
 import co.winish.recipe.commands.RecipeCommand;
 import co.winish.recipe.converters.RecipeCommandToRecipe;
 import co.winish.recipe.converters.RecipeToRecipeCommand;
+import co.winish.recipe.exceptions.NotFoundException;
 import co.winish.recipe.model.Recipe;
 import co.winish.recipe.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Recipe findById(Long id) {
         return recipeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Recipe not found, id: " + id));
+                .orElseThrow(() -> new NotFoundException("Recipe not found, id: " + id));
     }
 
 

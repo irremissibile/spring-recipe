@@ -1,6 +1,7 @@
 package co.winish.recipe.controllers;
 
 import co.winish.recipe.commands.RecipeCommand;
+import co.winish.recipe.exceptions.NotFoundException;
 import co.winish.recipe.model.Recipe;
 import co.winish.recipe.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
@@ -95,5 +96,17 @@ class RecipeControllerTest {
                 .andExpect(view().name("redirect:/"));
 
         verify(recipeService, times(1)).deleteById(anyLong());
+    }
+
+
+    @Test
+    public void testNotFoundGetRecipe() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+        when(recipeService.findById(anyLong())).thenThrow(new NotFoundException());
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound());
     }
 }
